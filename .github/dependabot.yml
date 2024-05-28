@@ -11,3 +11,6 @@ updates:
       riverpod:
         patterns:
           - "*riverpod*"
+      auto_route:
+        patterns:
+          - "auto_route*"
