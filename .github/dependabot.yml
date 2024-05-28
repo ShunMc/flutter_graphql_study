@@ -5,12 +5,15 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      freezed:
-        patterns:
-          - "freezed*"
-      riverpod:
-        patterns:
-          - "*riverpod*"
       auto_route:
         patterns:
           - "auto_route*"
+      freezed:
+        patterns:
+          - "freezed*"
+      graphql:
+        patterns:
+          - "graphql*"
+      riverpod:
+        patterns:
+          - "*riverpod*"

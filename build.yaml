@@ -1,0 +1,14 @@
+targets:
+  $default:
+    sources:
+      - "lib/**"
+      - "graphql/**"
+      - pubspec.*
+      - $package$
+    builders:
+      graphql_codegen:
+        options:
+          clients:
+            - graphql_flutter
+          outputDirectory: /lib/gen/graphql
+          assetsPath: graphql/**
