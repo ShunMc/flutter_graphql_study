@@ -37,12 +37,13 @@ dependencies:
   freezed_annotation: ^2.4.1
   graphql_flutter: ^5.1.2
   hooks_riverpod: ^2.5.1
+  pedantic_mono: ^1.27.0
   riverpod_annotation: ^2.3.5
 
 dev_dependencies:
   auto_route_generator: ^8.0.0
   build_runner: ^2.4.10
-  flutter_lints: ^4.0.0
+  flutter_lints: ^3.0.2
   flutter_test:
     sdk: flutter
   freezed: ^2.5.2
