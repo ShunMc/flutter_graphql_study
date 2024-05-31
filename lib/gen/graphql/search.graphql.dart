@@ -5,28 +5,42 @@ import 'package:graphql/client.dart' as graphql;
 import 'package:graphql_flutter/graphql_flutter.dart' as graphql_flutter;
 
 class Variables$Query$ReadRepositories {
-  factory Variables$Query$ReadRepositories({required int nRepositories}) =>
+  factory Variables$Query$ReadRepositories({
+    required int first,
+    String? after,
+  }) =>
       Variables$Query$ReadRepositories._({
-        r'nRepositories': nRepositories,
+        r'first': first,
+        if (after != null) r'after': after,
       });
 
   Variables$Query$ReadRepositories._(this._$data);
 
   factory Variables$Query$ReadRepositories.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$nRepositories = data['nRepositories'];
-    result$data['nRepositories'] = (l$nRepositories as int);
+    final l$first = data['first'];
+    result$data['first'] = (l$first as int);
+    if (data.containsKey('after')) {
+      final l$after = data['after'];
+      result$data['after'] = (l$after as String?);
+    }
     return Variables$Query$ReadRepositories._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get nRepositories => (_$data['nRepositories'] as int);
+  int get first => (_$data['first'] as int);
+
+  String? get after => (_$data['after'] as String?);
 
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$nRepositories = nRepositories;
-    result$data['nRepositories'] = l$nRepositories;
+    final l$first = first;
+    result$data['first'] = l$first;
+    if (_$data.containsKey('after')) {
+      final l$after = after;
+      result$data['after'] = l$after;
+    }
     return result$data;
   }
 
@@ -45,9 +59,17 @@ class Variables$Query$ReadRepositories {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$nRepositories = nRepositories;
-    final lOther$nRepositories = other.nRepositories;
-    if (l$nRepositories != lOther$nRepositories) {
+    final l$first = first;
+    final lOther$first = other.first;
+    if (l$first != lOther$first) {
+      return false;
+    }
+    final l$after = after;
+    final lOther$after = other.after;
+    if (_$data.containsKey('after') != other._$data.containsKey('after')) {
+      return false;
+    }
+    if (l$after != lOther$after) {
       return false;
     }
     return true;
@@ -55,8 +77,12 @@ class Variables$Query$ReadRepositories {
 
   @override
   int get hashCode {
-    final l$nRepositories = nRepositories;
-    return Object.hashAll([l$nRepositories]);
+    final l$first = first;
+    final l$after = after;
+    return Object.hashAll([
+      l$first,
+      _$data.containsKey('after') ? l$after : const {},
+    ]);
   }
 }
 
@@ -69,7 +95,10 @@ abstract class CopyWith$Variables$Query$ReadRepositories<TRes> {
   factory CopyWith$Variables$Query$ReadRepositories.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$ReadRepositories;
 
-  TRes call({int? nRepositories});
+  TRes call({
+    int? first,
+    String? after,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$ReadRepositories<TRes>
@@ -85,11 +114,14 @@ class _CopyWithImpl$Variables$Query$ReadRepositories<TRes>
 
   static const _undefined = <dynamic, dynamic>{};
 
-  TRes call({Object? nRepositories = _undefined}) =>
+  TRes call({
+    Object? first = _undefined,
+    Object? after = _undefined,
+  }) =>
       _then(Variables$Query$ReadRepositories._({
         ..._instance._$data,
-        if (nRepositories != _undefined && nRepositories != null)
-          'nRepositories': (nRepositories as int),
+        if (first != _undefined && first != null) 'first': (first as int),
+        if (after != _undefined) 'after': (after as String?),
       }));
 }
 
@@ -99,7 +131,11 @@ class _CopyWithStubImpl$Variables$Query$ReadRepositories<TRes>
 
   TRes _res;
 
-  call({int? nRepositories}) => _res;
+  call({
+    int? first,
+    String? after,
+  }) =>
+      _res;
 }
 
 class Query$ReadRepositories {
@@ -243,14 +279,23 @@ const documentNodeQueryReadRepositories = DocumentNode(definitions: [
     name: NameNode(value: 'ReadRepositories'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'nRepositories')),
+        variable: VariableNode(name: NameNode(value: 'first')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'after')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -265,9 +310,13 @@ const documentNodeQueryReadRepositories = DocumentNode(definitions: [
             alias: null,
             arguments: [
               ArgumentNode(
-                name: NameNode(value: 'last'),
-                value: VariableNode(name: NameNode(value: 'nRepositories')),
-              )
+                name: NameNode(value: 'first'),
+                value: VariableNode(name: NameNode(value: 'first')),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'after'),
+                value: VariableNode(name: NameNode(value: 'after')),
+              ),
             ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
@@ -293,6 +342,35 @@ const documentNodeQueryReadRepositories = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'viewerHasStarred'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'pageInfo'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'endCursor'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'hasNextPage'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -630,12 +708,14 @@ class _CopyWithStubImpl$Query$ReadRepositories$viewer<TRes>
 class Query$ReadRepositories$viewer$repositories {
   Query$ReadRepositories$viewer$repositories({
     this.nodes,
+    required this.pageInfo,
     this.$__typename = 'RepositoryConnection',
   });
 
   factory Query$ReadRepositories$viewer$repositories.fromJson(
       Map<String, dynamic> json) {
     final l$nodes = json['nodes'];
+    final l$pageInfo = json['pageInfo'];
     final l$$__typename = json['__typename'];
     return Query$ReadRepositories$viewer$repositories(
       nodes: (l$nodes as List<dynamic>?)
@@ -644,11 +724,15 @@ class Query$ReadRepositories$viewer$repositories {
               : Query$ReadRepositories$viewer$repositories$nodes.fromJson(
                   (e as Map<String, dynamic>)))
           .toList(),
+      pageInfo: Query$ReadRepositories$viewer$repositories$pageInfo.fromJson(
+          (l$pageInfo as Map<String, dynamic>)),
       $__typename: (l$$__typename as String),
     );
   }
 
   final List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes;
+
+  final Query$ReadRepositories$viewer$repositories$pageInfo pageInfo;
 
   final String $__typename;
 
@@ -656,6 +740,8 @@ class Query$ReadRepositories$viewer$repositories {
     final _resultData = <String, dynamic>{};
     final l$nodes = nodes;
     _resultData['nodes'] = l$nodes?.map((e) => e?.toJson()).toList();
+    final l$pageInfo = pageInfo;
+    _resultData['pageInfo'] = l$pageInfo.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -664,9 +750,11 @@ class Query$ReadRepositories$viewer$repositories {
   @override
   int get hashCode {
     final l$nodes = nodes;
+    final l$pageInfo = pageInfo;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$nodes == null ? null : Object.hashAll(l$nodes.map((v) => v)),
+      l$pageInfo,
       l$$__typename,
     ]);
   }
@@ -694,6 +782,11 @@ class Query$ReadRepositories$viewer$repositories {
         }
       }
     } else if (l$nodes != lOther$nodes) {
+      return false;
+    }
+    final l$pageInfo = pageInfo;
+    final lOther$pageInfo = other.pageInfo;
+    if (l$pageInfo != lOther$pageInfo) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -726,6 +819,7 @@ abstract class CopyWith$Query$ReadRepositories$viewer$repositories<TRes> {
 
   TRes call({
     List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes,
+    Query$ReadRepositories$viewer$repositories$pageInfo? pageInfo,
     String? $__typename,
   });
   TRes nodes(
@@ -734,6 +828,8 @@ abstract class CopyWith$Query$ReadRepositories$viewer$repositories<TRes> {
                   CopyWith$Query$ReadRepositories$viewer$repositories$nodes<
                       Query$ReadRepositories$viewer$repositories$nodes>?>?)
           _fn);
+  CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes>
+      get pageInfo;
 }
 
 class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
@@ -751,6 +847,7 @@ class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
 
   TRes call({
     Object? nodes = _undefined,
+    Object? pageInfo = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$ReadRepositories$viewer$repositories(
@@ -758,6 +855,9 @@ class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
             ? _instance.nodes
             : (nodes
                 as List<Query$ReadRepositories$viewer$repositories$nodes?>?),
+        pageInfo: pageInfo == _undefined || pageInfo == null
+            ? _instance.pageInfo
+            : (pageInfo as Query$ReadRepositories$viewer$repositories$pageInfo),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -776,6 +876,13 @@ class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
                   e,
                   (i) => i,
                 )))?.toList());
+
+  CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes>
+      get pageInfo {
+    final local$pageInfo = _instance.pageInfo;
+    return CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo(
+        local$pageInfo, (e) => call(pageInfo: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories<TRes>
@@ -786,11 +893,17 @@ class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories<TRes>
 
   call({
     List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes,
+    Query$ReadRepositories$viewer$repositories$pageInfo? pageInfo,
     String? $__typename,
   }) =>
       _res;
 
   nodes(_fn) => _res;
+
+  CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes>
+      get pageInfo =>
+          CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo.stub(
+              _res);
 }
 
 class Query$ReadRepositories$viewer$repositories$nodes {
@@ -955,6 +1068,161 @@ class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$nodes<TRes>
     String? id,
     String? name,
     bool? viewerHasStarred,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$ReadRepositories$viewer$repositories$pageInfo {
+  Query$ReadRepositories$viewer$repositories$pageInfo({
+    this.endCursor,
+    required this.hasNextPage,
+    this.$__typename = 'PageInfo',
+  });
+
+  factory Query$ReadRepositories$viewer$repositories$pageInfo.fromJson(
+      Map<String, dynamic> json) {
+    final l$endCursor = json['endCursor'];
+    final l$hasNextPage = json['hasNextPage'];
+    final l$$__typename = json['__typename'];
+    return Query$ReadRepositories$viewer$repositories$pageInfo(
+      endCursor: (l$endCursor as String?),
+      hasNextPage: (l$hasNextPage as bool),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final String? endCursor;
+
+  final bool hasNextPage;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$endCursor = endCursor;
+    _resultData['endCursor'] = l$endCursor;
+    final l$hasNextPage = hasNextPage;
+    _resultData['hasNextPage'] = l$hasNextPage;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$endCursor = endCursor;
+    final l$hasNextPage = hasNextPage;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$endCursor,
+      l$hasNextPage,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$ReadRepositories$viewer$repositories$pageInfo) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$endCursor = endCursor;
+    final lOther$endCursor = other.endCursor;
+    if (l$endCursor != lOther$endCursor) {
+      return false;
+    }
+    final l$hasNextPage = hasNextPage;
+    final lOther$hasNextPage = other.hasNextPage;
+    if (l$hasNextPage != lOther$hasNextPage) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$ReadRepositories$viewer$repositories$pageInfo
+    on Query$ReadRepositories$viewer$repositories$pageInfo {
+  CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<
+          Query$ReadRepositories$viewer$repositories$pageInfo>
+      get copyWith =>
+          CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<
+    TRes> {
+  factory CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo(
+    Query$ReadRepositories$viewer$repositories$pageInfo instance,
+    TRes Function(Query$ReadRepositories$viewer$repositories$pageInfo) then,
+  ) = _CopyWithImpl$Query$ReadRepositories$viewer$repositories$pageInfo;
+
+  factory CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$pageInfo;
+
+  TRes call({
+    String? endCursor,
+    bool? hasNextPage,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$ReadRepositories$viewer$repositories$pageInfo<TRes>
+    implements
+        CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes> {
+  _CopyWithImpl$Query$ReadRepositories$viewer$repositories$pageInfo(
+    this._instance,
+    this._then,
+  );
+
+  final Query$ReadRepositories$viewer$repositories$pageInfo _instance;
+
+  final TRes Function(Query$ReadRepositories$viewer$repositories$pageInfo)
+      _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({
+    Object? endCursor = _undefined,
+    Object? hasNextPage = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$ReadRepositories$viewer$repositories$pageInfo(
+        endCursor: endCursor == _undefined
+            ? _instance.endCursor
+            : (endCursor as String?),
+        hasNextPage: hasNextPage == _undefined || hasNextPage == null
+            ? _instance.hasNextPage
+            : (hasNextPage as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$pageInfo<
+        TRes>
+    implements
+        CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes> {
+  _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$pageInfo(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? endCursor,
+    bool? hasNextPage,
     String? $__typename,
   }) =>
       _res;

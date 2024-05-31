@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_graphql_study/gen/graphql/search.graphql.dart';
+import 'package:flutter_graphql_study/utility/extensions/query_hook_result.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 @RoutePage()
@@ -12,9 +13,12 @@ class HomePage extends HookWidget {
     final result = useQuery$ReadRepositories(
       Options$Query$ReadRepositories(
         variables: Variables$Query$ReadRepositories(
-          nRepositories: 10,
+          first: 10,
         ),
       ),
+    );
+    const loading = Center(
+      child: CircularProgressIndicator(),
     );
 
     return Scaffold(
@@ -22,19 +26,54 @@ class HomePage extends HookWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Home'),
       ),
-      body: ListView(
-        children: result.result.parsedData?.viewer.repositories.nodes?.map(
-              (value) {
-                if (value == null) {
-                  return const SizedBox.shrink();
-                }
-                return ListTile(
-                  title: Text(value.name),
-                  subtitle: Text(value.viewerHasStarred.toString()),
+      body: result.when(
+        loading: () => loading,
+        error: (_) => loading,
+        data: (data) {
+          if (data == null) {
+            return loading;
+          }
+          final repositories = data.viewer.repositories.nodes ?? [];
+          final pageInfo = data.viewer.repositories.pageInfo;
+          return ListView.builder(
+            itemCount: repositories.length + (pageInfo.hasNextPage ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == repositories.length) {
+                result.fetchMore(
+                  FetchMoreOptions$Query$ReadRepositories(
+                    updateQuery: (previousResultData, fetchMoreResultData) {
+                      final nodes = [
+                        ...previousResultData?['viewer']['repositories']
+                            ['nodes'],
+                        ...fetchMoreResultData?['viewer']['repositories']
+                            ['nodes'],
+                      ];
+                      fetchMoreResultData?['viewer']['repositories']['nodes'] =
+                          nodes;
+                      return fetchMoreResultData;
+                    },
+                    variables: Variables$Query$ReadRepositories(
+                      first: 10,
+                      after: pageInfo.endCursor,
+                    ),
+                  ),
                 );
-              },
-            ).toList() ??
-            [],
+                return const SizedBox(
+                  height: 50,
+                  child: loading,
+                );
+              }
+              final repository = repositories[index];
+              if (repository == null) {
+                return null;
+              }
+              return ListTile(
+                title: Text(repository.name),
+                subtitle: Text(repository.viewerHasStarred.toString()),
+              );
+            },
+          );
+        },
       ),
     );
   }

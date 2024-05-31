@@ -1,11 +1,15 @@
-query ReadRepositories($nRepositories: Int!) {
-    viewer {
-      repositories(last: $nRepositories) {
-        nodes {
-          id
-          name
-          viewerHasStarred
-        }
+query ReadRepositories($first:Int!, $after: String) {
+  viewer {
+    repositories(first: $first, after: $after) {
+      nodes {
+        id
+        name
+        viewerHasStarred
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
   }
+}
