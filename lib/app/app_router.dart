@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_graphql_study/ui/home/home_page.dart';
 import 'package:flutter_graphql_study/ui/repositories/repositories_page.dart';
+import 'package:flutter_graphql_study/ui/search/search_page.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -15,5 +16,6 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: HomeRoute.page, initial: true),
         AutoRoute(page: RepositoriesRoute.page),
+        AutoRoute(page: SearchRoute.page),
       ];
 }

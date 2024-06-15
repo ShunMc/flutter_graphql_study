@@ -21,6 +21,12 @@ class HomePage extends StatelessWidget {
               AutoRouter.of(context).push(const RepositoriesRoute());
             },
           ),
+          ListTile(
+            title: const Text('Search Repositories'),
+            onTap: () {
+              AutoRouter.of(context).push(const SearchRoute());
+            },
+          ),
         ],
       ),
     );
