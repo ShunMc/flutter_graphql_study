@@ -1,0 +1,15 @@
+query SearchRepositories($query: String!, $first: Int!, $after: String) {
+  search(query: $query, type: REPOSITORY, first: $first, after: $after) {
+    nodes {
+      ... on Repository {
+        id
+        name
+        viewerHasStarred
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
