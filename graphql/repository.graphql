@@ -1,0 +1,5 @@
+fragment repository on Repository {
+    id
+    name
+    viewerHasStarred
+}

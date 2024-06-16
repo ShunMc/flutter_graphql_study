@@ -2,9 +2,7 @@ query ReadRepositories($first:Int!, $after: String) {
   viewer {
     repositories(first: $first, after: $after) {
       nodes {
-        id
-        name
-        viewerHasStarred
+        ...repository
       }
       pageInfo {
         endCursor

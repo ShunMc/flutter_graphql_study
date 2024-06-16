@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart' as widgets;
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:graphql_flutter/graphql_flutter.dart' as graphql_flutter;
+import 'repository.graphql.dart';
 
 class Variables$Query$SearchRepositories {
   factory Variables$Query$SearchRepositories({
@@ -359,43 +360,9 @@ const documentNodeQuerySearchRepositories = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
-              InlineFragmentNode(
-                typeCondition: TypeConditionNode(
-                    on: NamedTypeNode(
-                  name: NameNode(value: 'Repository'),
-                  isNonNull: false,
-                )),
+              FragmentSpreadNode(
+                name: NameNode(value: 'repository'),
                 directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'viewerHasStarred'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
@@ -453,6 +420,7 @@ const documentNodeQuerySearchRepositories = DocumentNode(definitions: [
       ),
     ]),
   ),
+  fragmentDefinitionrepository,
 ]);
 Query$SearchRepositories _parserFn$Query$SearchRepositories(
         Map<String, dynamic> data) =>
@@ -814,9 +782,6 @@ class Query$SearchRepositories$search$nodes {
   factory Query$SearchRepositories$search$nodes.fromJson(
       Map<String, dynamic> json) {
     switch (json["__typename"] as String) {
-      case "Repository":
-        return Query$SearchRepositories$search$nodes$$Repository.fromJson(json);
-
       case "App":
         return Query$SearchRepositories$search$nodes$$App.fromJson(json);
 
@@ -837,6 +802,9 @@ class Query$SearchRepositories$search$nodes {
       case "PullRequest":
         return Query$SearchRepositories$search$nodes$$PullRequest.fromJson(
             json);
+
+      case "Repository":
+        return Query$SearchRepositories$search$nodes$$Repository.fromJson(json);
 
       case "User":
         return Query$SearchRepositories$search$nodes$$User.fromJson(json);
@@ -890,8 +858,6 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
             (i) => i,
           );
   _T when<_T>({
-    required _T Function(Query$SearchRepositories$search$nodes$$Repository)
-        repository,
     required _T Function(Query$SearchRepositories$search$nodes$$App) app,
     required _T Function(Query$SearchRepositories$search$nodes$$Discussion)
         discussion,
@@ -903,14 +869,12 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
         organization,
     required _T Function(Query$SearchRepositories$search$nodes$$PullRequest)
         pullRequest,
+    required _T Function(Query$SearchRepositories$search$nodes$$Repository)
+        repository,
     required _T Function(Query$SearchRepositories$search$nodes$$User) user,
     required _T Function() orElse,
   }) {
     switch ($__typename) {
-      case "Repository":
-        return repository(
-            this as Query$SearchRepositories$search$nodes$$Repository);
-
       case "App":
         return app(this as Query$SearchRepositories$search$nodes$$App);
 
@@ -933,6 +897,10 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
         return pullRequest(
             this as Query$SearchRepositories$search$nodes$$PullRequest);
 
+      case "Repository":
+        return repository(
+            this as Query$SearchRepositories$search$nodes$$Repository);
+
       case "User":
         return user(this as Query$SearchRepositories$search$nodes$$User);
 
@@ -942,7 +910,6 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
   }
 
   _T maybeWhen<_T>({
-    _T Function(Query$SearchRepositories$search$nodes$$Repository)? repository,
     _T Function(Query$SearchRepositories$search$nodes$$App)? app,
     _T Function(Query$SearchRepositories$search$nodes$$Discussion)? discussion,
     _T Function(Query$SearchRepositories$search$nodes$$Issue)? issue,
@@ -952,18 +919,11 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
         organization,
     _T Function(Query$SearchRepositories$search$nodes$$PullRequest)?
         pullRequest,
+    _T Function(Query$SearchRepositories$search$nodes$$Repository)? repository,
     _T Function(Query$SearchRepositories$search$nodes$$User)? user,
     required _T Function() orElse,
   }) {
     switch ($__typename) {
-      case "Repository":
-        if (repository != null) {
-          return repository(
-              this as Query$SearchRepositories$search$nodes$$Repository);
-        } else {
-          return orElse();
-        }
-
       case "App":
         if (app != null) {
           return app(this as Query$SearchRepositories$search$nodes$$App);
@@ -1006,6 +966,14 @@ extension UtilityExtension$Query$SearchRepositories$search$nodes
         if (pullRequest != null) {
           return pullRequest(
               this as Query$SearchRepositories$search$nodes$$PullRequest);
+        } else {
+          return orElse();
+        }
+
+      case "Repository":
+        if (repository != null) {
+          return repository(
+              this as Query$SearchRepositories$search$nodes$$Repository);
         } else {
           return orElse();
         }
@@ -1062,179 +1030,6 @@ class _CopyWithStubImpl$Query$SearchRepositories$search$nodes<TRes>
   TRes _res;
 
   call({String? $__typename}) => _res;
-}
-
-class Query$SearchRepositories$search$nodes$$Repository
-    implements Query$SearchRepositories$search$nodes {
-  Query$SearchRepositories$search$nodes$$Repository({
-    required this.id,
-    required this.name,
-    required this.viewerHasStarred,
-    this.$__typename = 'Repository',
-  });
-
-  factory Query$SearchRepositories$search$nodes$$Repository.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$name = json['name'];
-    final l$viewerHasStarred = json['viewerHasStarred'];
-    final l$$__typename = json['__typename'];
-    return Query$SearchRepositories$search$nodes$$Repository(
-      id: (l$id as String),
-      name: (l$name as String),
-      viewerHasStarred: (l$viewerHasStarred as bool),
-      $__typename: (l$$__typename as String),
-    );
-  }
-
-  final String id;
-
-  final String name;
-
-  final bool viewerHasStarred;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$viewerHasStarred = viewerHasStarred;
-    _resultData['viewerHasStarred'] = l$viewerHasStarred;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$name = name;
-    final l$viewerHasStarred = viewerHasStarred;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$name,
-      l$viewerHasStarred,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$SearchRepositories$search$nodes$$Repository) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$viewerHasStarred = viewerHasStarred;
-    final lOther$viewerHasStarred = other.viewerHasStarred;
-    if (l$viewerHasStarred != lOther$viewerHasStarred) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$SearchRepositories$search$nodes$$Repository
-    on Query$SearchRepositories$search$nodes$$Repository {
-  CopyWith$Query$SearchRepositories$search$nodes$$Repository<
-          Query$SearchRepositories$search$nodes$$Repository>
-      get copyWith =>
-          CopyWith$Query$SearchRepositories$search$nodes$$Repository(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$SearchRepositories$search$nodes$$Repository<
-    TRes> {
-  factory CopyWith$Query$SearchRepositories$search$nodes$$Repository(
-    Query$SearchRepositories$search$nodes$$Repository instance,
-    TRes Function(Query$SearchRepositories$search$nodes$$Repository) then,
-  ) = _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository;
-
-  factory CopyWith$Query$SearchRepositories$search$nodes$$Repository.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository;
-
-  TRes call({
-    String? id,
-    String? name,
-    bool? viewerHasStarred,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository<TRes>
-    implements
-        CopyWith$Query$SearchRepositories$search$nodes$$Repository<TRes> {
-  _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository(
-    this._instance,
-    this._then,
-  );
-
-  final Query$SearchRepositories$search$nodes$$Repository _instance;
-
-  final TRes Function(Query$SearchRepositories$search$nodes$$Repository) _then;
-
-  static const _undefined = <dynamic, dynamic>{};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? name = _undefined,
-    Object? viewerHasStarred = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$SearchRepositories$search$nodes$$Repository(
-        id: id == _undefined || id == null ? _instance.id : (id as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        viewerHasStarred:
-            viewerHasStarred == _undefined || viewerHasStarred == null
-                ? _instance.viewerHasStarred
-                : (viewerHasStarred as bool),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository<TRes>
-    implements
-        CopyWith$Query$SearchRepositories$search$nodes$$Repository<TRes> {
-  _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? id,
-    String? name,
-    bool? viewerHasStarred,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$SearchRepositories$search$nodes$$App
@@ -1841,6 +1636,179 @@ class _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$PullRequest<TRes>
   TRes _res;
 
   call({String? $__typename}) => _res;
+}
+
+class Query$SearchRepositories$search$nodes$$Repository
+    implements Fragment$repository, Query$SearchRepositories$search$nodes {
+  Query$SearchRepositories$search$nodes$$Repository({
+    required this.id,
+    required this.name,
+    required this.viewerHasStarred,
+    this.$__typename = 'Repository',
+  });
+
+  factory Query$SearchRepositories$search$nodes$$Repository.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$viewerHasStarred = json['viewerHasStarred'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchRepositories$search$nodes$$Repository(
+      id: (l$id as String),
+      name: (l$name as String),
+      viewerHasStarred: (l$viewerHasStarred as bool),
+      $__typename: (l$$__typename as String),
+    );
+  }
+
+  final String id;
+
+  final String name;
+
+  final bool viewerHasStarred;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$viewerHasStarred = viewerHasStarred;
+    _resultData['viewerHasStarred'] = l$viewerHasStarred;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$viewerHasStarred = viewerHasStarred;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$viewerHasStarred,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchRepositories$search$nodes$$Repository) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$viewerHasStarred = viewerHasStarred;
+    final lOther$viewerHasStarred = other.viewerHasStarred;
+    if (l$viewerHasStarred != lOther$viewerHasStarred) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchRepositories$search$nodes$$Repository
+    on Query$SearchRepositories$search$nodes$$Repository {
+  CopyWith$Query$SearchRepositories$search$nodes$$Repository<
+          Query$SearchRepositories$search$nodes$$Repository>
+      get copyWith =>
+          CopyWith$Query$SearchRepositories$search$nodes$$Repository(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchRepositories$search$nodes$$Repository<
+    TRes> {
+  factory CopyWith$Query$SearchRepositories$search$nodes$$Repository(
+    Query$SearchRepositories$search$nodes$$Repository instance,
+    TRes Function(Query$SearchRepositories$search$nodes$$Repository) then,
+  ) = _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository;
+
+  factory CopyWith$Query$SearchRepositories$search$nodes$$Repository.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository;
+
+  TRes call({
+    String? id,
+    String? name,
+    bool? viewerHasStarred,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository<TRes>
+    implements
+        CopyWith$Query$SearchRepositories$search$nodes$$Repository<TRes> {
+  _CopyWithImpl$Query$SearchRepositories$search$nodes$$Repository(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchRepositories$search$nodes$$Repository _instance;
+
+  final TRes Function(Query$SearchRepositories$search$nodes$$Repository) _then;
+
+  static const _undefined = <dynamic, dynamic>{};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? viewerHasStarred = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchRepositories$search$nodes$$Repository(
+        id: id == _undefined || id == null ? _instance.id : (id as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        viewerHasStarred:
+            viewerHasStarred == _undefined || viewerHasStarred == null
+                ? _instance.viewerHasStarred
+                : (viewerHasStarred as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository<TRes>
+    implements
+        CopyWith$Query$SearchRepositories$search$nodes$$Repository<TRes> {
+  _CopyWithStubImpl$Query$SearchRepositories$search$nodes$$Repository(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? id,
+    String? name,
+    bool? viewerHasStarred,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$SearchRepositories$search$nodes$$User

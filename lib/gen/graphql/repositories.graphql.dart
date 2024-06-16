@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart' as widgets;
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:graphql_flutter/graphql_flutter.dart' as graphql_flutter;
+import 'repository.graphql.dart';
 
 class Variables$Query$ReadRepositories {
   factory Variables$Query$ReadRepositories({
@@ -326,26 +327,9 @@ const documentNodeQueryReadRepositories = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
+                  FragmentSpreadNode(
+                    name: NameNode(value: 'repository'),
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'viewerHasStarred'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -412,6 +396,7 @@ const documentNodeQueryReadRepositories = DocumentNode(definitions: [
       ),
     ]),
   ),
+  fragmentDefinitionrepository,
 ]);
 Query$ReadRepositories _parserFn$Query$ReadRepositories(
         Map<String, dynamic> data) =>
@@ -721,8 +706,7 @@ class Query$ReadRepositories$viewer$repositories {
       nodes: (l$nodes as List<dynamic>?)
           ?.map((e) => e == null
               ? null
-              : Query$ReadRepositories$viewer$repositories$nodes.fromJson(
-                  (e as Map<String, dynamic>)))
+              : Fragment$repository.fromJson((e as Map<String, dynamic>)))
           .toList(),
       pageInfo: Query$ReadRepositories$viewer$repositories$pageInfo.fromJson(
           (l$pageInfo as Map<String, dynamic>)),
@@ -730,7 +714,7 @@ class Query$ReadRepositories$viewer$repositories {
     );
   }
 
-  final List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes;
+  final List<Fragment$repository?>? nodes;
 
   final Query$ReadRepositories$viewer$repositories$pageInfo pageInfo;
 
@@ -818,15 +802,13 @@ abstract class CopyWith$Query$ReadRepositories$viewer$repositories<TRes> {
       _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories;
 
   TRes call({
-    List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes,
+    List<Fragment$repository?>? nodes,
     Query$ReadRepositories$viewer$repositories$pageInfo? pageInfo,
     String? $__typename,
   });
   TRes nodes(
-      Iterable<Query$ReadRepositories$viewer$repositories$nodes?>? Function(
-              Iterable<
-                  CopyWith$Query$ReadRepositories$viewer$repositories$nodes<
-                      Query$ReadRepositories$viewer$repositories$nodes>?>?)
+      Iterable<Fragment$repository?>? Function(
+              Iterable<CopyWith$Fragment$repository<Fragment$repository>?>?)
           _fn);
   CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo<TRes>
       get pageInfo;
@@ -853,8 +835,7 @@ class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
       _then(Query$ReadRepositories$viewer$repositories(
         nodes: nodes == _undefined
             ? _instance.nodes
-            : (nodes
-                as List<Query$ReadRepositories$viewer$repositories$nodes?>?),
+            : (nodes as List<Fragment$repository?>?),
         pageInfo: pageInfo == _undefined || pageInfo == null
             ? _instance.pageInfo
             : (pageInfo as Query$ReadRepositories$viewer$repositories$pageInfo),
@@ -864,15 +845,13 @@ class _CopyWithImpl$Query$ReadRepositories$viewer$repositories<TRes>
       ));
 
   TRes nodes(
-          Iterable<Query$ReadRepositories$viewer$repositories$nodes?>? Function(
-                  Iterable<
-                      CopyWith$Query$ReadRepositories$viewer$repositories$nodes<
-                          Query$ReadRepositories$viewer$repositories$nodes>?>?)
+          Iterable<Fragment$repository?>? Function(
+                  Iterable<CopyWith$Fragment$repository<Fragment$repository>?>?)
               _fn) =>
       call(
           nodes: _fn(_instance.nodes?.map((e) => e == null
               ? null
-              : CopyWith$Query$ReadRepositories$viewer$repositories$nodes(
+              : CopyWith$Fragment$repository(
                   e,
                   (i) => i,
                 )))?.toList());
@@ -892,7 +871,7 @@ class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories<TRes>
   TRes _res;
 
   call({
-    List<Query$ReadRepositories$viewer$repositories$nodes?>? nodes,
+    List<Fragment$repository?>? nodes,
     Query$ReadRepositories$viewer$repositories$pageInfo? pageInfo,
     String? $__typename,
   }) =>
@@ -904,173 +883,6 @@ class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories<TRes>
       get pageInfo =>
           CopyWith$Query$ReadRepositories$viewer$repositories$pageInfo.stub(
               _res);
-}
-
-class Query$ReadRepositories$viewer$repositories$nodes {
-  Query$ReadRepositories$viewer$repositories$nodes({
-    required this.id,
-    required this.name,
-    required this.viewerHasStarred,
-    this.$__typename = 'Repository',
-  });
-
-  factory Query$ReadRepositories$viewer$repositories$nodes.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$name = json['name'];
-    final l$viewerHasStarred = json['viewerHasStarred'];
-    final l$$__typename = json['__typename'];
-    return Query$ReadRepositories$viewer$repositories$nodes(
-      id: (l$id as String),
-      name: (l$name as String),
-      viewerHasStarred: (l$viewerHasStarred as bool),
-      $__typename: (l$$__typename as String),
-    );
-  }
-
-  final String id;
-
-  final String name;
-
-  final bool viewerHasStarred;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$viewerHasStarred = viewerHasStarred;
-    _resultData['viewerHasStarred'] = l$viewerHasStarred;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$name = name;
-    final l$viewerHasStarred = viewerHasStarred;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$name,
-      l$viewerHasStarred,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$ReadRepositories$viewer$repositories$nodes) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$viewerHasStarred = viewerHasStarred;
-    final lOther$viewerHasStarred = other.viewerHasStarred;
-    if (l$viewerHasStarred != lOther$viewerHasStarred) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$ReadRepositories$viewer$repositories$nodes
-    on Query$ReadRepositories$viewer$repositories$nodes {
-  CopyWith$Query$ReadRepositories$viewer$repositories$nodes<
-          Query$ReadRepositories$viewer$repositories$nodes>
-      get copyWith => CopyWith$Query$ReadRepositories$viewer$repositories$nodes(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$ReadRepositories$viewer$repositories$nodes<TRes> {
-  factory CopyWith$Query$ReadRepositories$viewer$repositories$nodes(
-    Query$ReadRepositories$viewer$repositories$nodes instance,
-    TRes Function(Query$ReadRepositories$viewer$repositories$nodes) then,
-  ) = _CopyWithImpl$Query$ReadRepositories$viewer$repositories$nodes;
-
-  factory CopyWith$Query$ReadRepositories$viewer$repositories$nodes.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$nodes;
-
-  TRes call({
-    String? id,
-    String? name,
-    bool? viewerHasStarred,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$ReadRepositories$viewer$repositories$nodes<TRes>
-    implements CopyWith$Query$ReadRepositories$viewer$repositories$nodes<TRes> {
-  _CopyWithImpl$Query$ReadRepositories$viewer$repositories$nodes(
-    this._instance,
-    this._then,
-  );
-
-  final Query$ReadRepositories$viewer$repositories$nodes _instance;
-
-  final TRes Function(Query$ReadRepositories$viewer$repositories$nodes) _then;
-
-  static const _undefined = <dynamic, dynamic>{};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? name = _undefined,
-    Object? viewerHasStarred = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$ReadRepositories$viewer$repositories$nodes(
-        id: id == _undefined || id == null ? _instance.id : (id as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        viewerHasStarred:
-            viewerHasStarred == _undefined || viewerHasStarred == null
-                ? _instance.viewerHasStarred
-                : (viewerHasStarred as bool),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$nodes<TRes>
-    implements CopyWith$Query$ReadRepositories$viewer$repositories$nodes<TRes> {
-  _CopyWithStubImpl$Query$ReadRepositories$viewer$repositories$nodes(this._res);
-
-  TRes _res;
-
-  call({
-    String? id,
-    String? name,
-    bool? viewerHasStarred,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$ReadRepositories$viewer$repositories$pageInfo {
